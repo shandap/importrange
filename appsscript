@@ -26,7 +26,6 @@ function importRange(sourceID, sourceRange, destinationID, destinationRangeStart
   const destinationSS = SpreadsheetApp.openById(destinationID);
   const destStartRange = destinationSS.getRange(destinationRangeStart);
   const destSheet = destStartRange.getSheet();
-  var nextRow = sheet.getLastRow()+1; // get next row
  
   // Get the full data range to paste from start range.
   const destRange = destSheet.getRange(
