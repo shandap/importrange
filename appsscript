@@ -1,0 +1,48 @@
+// Imports range data from one Google Sheet to another.
+// @param {string} sourceID - The id of the source Google Sheet.
+// @param {string} sourceRange - The Sheet tab and range to copy.
+// @param {string} destinationID - The id of the destination Google Sheet.
+// @param {string} destinationRangeStart - The destintation location start cell as a sheet name and cell.
+//
+function importRange(sourceID, sourceRange, destinationID, destinationRangeStart){
+ 
+  //Enter the key details: 
+  var sourceID = "1U0HNgWIf3EITCxZclnWLdyCElNbkbteakM70h-mXnY0"
+  var sourceRange = "Sheet1!A1:K"
+  var destinationID = "1Q4p3E0Zr-134PXINrYxuqCWYoezvGARhWoeULh6hLFU"
+  var destinationRangeStart = "Sheet1!A1"
+
+  // Gather the source range values
+  const sourceSS = SpreadsheetApp.openById(sourceID);
+  const sourceRng = sourceSS.getRange(sourceRange)
+  const sourceVals = sourceRng.getValues();
+ 
+  // Get formatting data
+  const sourceFontStyle = sourceRng.getFontStyles();
+  const sourceFontWeight = sourceRng.getFontWeights();
+  const sourceFontBackgroundColor = sourceRng.getBackgrounds();
+ 
+  // Get the destination sheet and cell location.
+  const destinationSS = SpreadsheetApp.openById(destinationID);
+  const destStartRange = destinationSS.getRange(destinationRangeStart);
+  const destSheet = destStartRange.getSheet();
+  var nextRow = sheet.getLastRow()+1; // get next row
+ 
+  // Get the full data range to paste from start range.
+  const destRange = destSheet.getRange(
+      destStartRange.getRow(),
+      destStartRange.getColumn(),
+      sourceVals.length,
+      sourceVals[0].length
+    );
+  
+  // Paste in the values.
+  destRange.setValues(sourceVals);
+ 
+  // Set formatting
+  destRange.setFontStyles(sourceFontStyle);
+  destRange.setFontWeights(sourceFontWeight);
+  destRange.setBackgrounds(sourceFontBackgroundColor);
+ 
+  SpreadsheetApp.flush();
+};
