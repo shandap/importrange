@@ -45,3 +45,32 @@ function importRange(sourceID, sourceRange, destinationID, destinationRangeStart
  
   SpreadsheetApp.flush();
 };
+
+
+/// another option I am working on
+function importRange(sourceID, sourceRange, destinationID, destinationSheet){
+
+//Enter the key details: 
+  var sourceID = "1U0HNgWIf3EITCxZclnWLdyCElNbkbteakM70h-mXnY0"
+  var sourceRange = "Sheet1!A1:K"
+  var destinationID = "1Q4p3E0Zr-134PXINrYxuqCWYoezvGARhWoeULh6hLFU"
+  var destinationSheet = "Sheet1!"
+
+  // source spreadsheets
+  var sourceSpreadSheet = SpreadsheetApp.openById(sourceID);
+  var srcSheet = sourceSpreadSheet.setActiveRange(sourceRange);
+
+  //destination spreadsheet
+  var destinationSpreadSheet = SpreadsheetApp.openById(destinationID);
+  var destSheet = destinationSpreadSheet.getSheets(destinationSheet); 
+
+  // Get the contents of a cell in srcSheet
+  var range = srcSheet.getRange(sourceRange);
+  var values = range.getValues();
+
+  // place it in the last row if the destination cell
+  var lastRow = destSheet.getLastRow();
+  destSheet.getRange(lastRow + 1,1).setValue(values);
+
+}
+
